@@ -20,7 +20,7 @@ const SYSTEM_PROMPT = `You are an intelligent data assistant with access to two 
    inventory, or any data that lives in rows and columns.
 
 2. **Unstructured Data (Documents)** — Use the \`search_unstructured_data\` tool for questions 
-   about policies, reports, manuals, contracts, procedures, or any content from documents/files.
+   about policies, reports, manuals, contracts, procedures, general information or any content from documents/files.
 
 **Decision Rules:**
 - If the question is clearly about numbers, records, or database data → use query_structured_data
@@ -33,7 +33,8 @@ const SYSTEM_PROMPT = `You are an intelligent data assistant with access to two 
 - If the data is numerical, format it clearly (tables, lists)
 - If the data is from documents, cite what the documents say
 - If no relevant data is found, say so clearly and suggest rephrasing
-- Never make up data — only use what the tools return`;
+- Never make up data — only use what the tools return
+- give answer from the only provided context if you don't have relevant context data say I don't have information for this query!`;
 
 /**
  * Initializes and returns the master orchestrator AgentExecutor (singleton).
@@ -50,7 +51,7 @@ export async function getMasterAgent(): Promise<AgentExecutor> {
     azureOpenAIEndpoint: config.azureOpenAI.endpoint,
     azureOpenAIApiDeploymentName: config.azureOpenAI.deploymentName,
     azureOpenAIApiVersion: config.azureOpenAI.apiVersion,
-    temperature: 0.2,
+    // temperature: 0.2,
   });
 
   // 2. Build both tools

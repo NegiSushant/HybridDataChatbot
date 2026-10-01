@@ -30,26 +30,30 @@ export async function searchDocuments(query: string): Promise<string> {
   const client = getSearchClient();
   const { contentField, semanticConfig, topK } = config.azureSearch;
 
-  const useSemanticSearch = semanticConfig.length > 0;
+  // const useSemanticSearch = semanticConfig.length > 0;
 
   let results;
-  if (useSemanticSearch) {
-    results = await client.search(query, {
-      top: topK,
-      select: [contentField],
-      queryType: "semantic" as const,
-      semanticSearchOptions: {
-        configurationName: semanticConfig,
-        answers: { answerType: "extractive" as const },
-        captions: { captionType: "extractive" as const },
-      },
-    });
-  } else {
-    results = await client.search(query, {
-      top: topK,
-      select: [contentField],
-    });
-  }
+  // if (useSemanticSearch) {
+  //   results = await client.search(query, {
+  //     top: topK,
+  //     select: [contentField],
+  //     queryType: "semantic" as const,
+  //     semanticSearchOptions: {
+  //       configurationName: semanticConfig,
+  //       answers: { answerType: "extractive" as const },
+  //       captions: { captionType: "extractive" as const },
+  //     },
+  //   });
+  // } else {
+  //   results = await client.search(query, {
+  //     top: topK,
+  //     select: [contentField],
+  //   });
+  // }
+  results = await client.search(query, {
+    top: 5,
+    select: [contentField],
+  });
 
   const chunks: string[] = [];
 

@@ -55,29 +55,29 @@ services:
     restart: "no"    # Run once and exit
 
   # ── App (Node.js Agent Server) ────────────────────────────────────────────────
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: agent_app
-    restart: unless-stopped
-    depends_on:
-      sqlserver:
-        condition: service_healthy
-      sqlserver-init:
-        condition: service_completed_successfully
-    env_file:
-      - .env
-    environment:
-      # Override SQL host to point to the container name (not localhost)
-      SQL_SERVER: "sqlserver"
-      SQL_PORT: "1433"
-      SQL_ENCRYPT: "false"                   # No SSL inside Docker network
-      SQL_TRUST_SERVER_CERTIFICATE: "true"   # Required for self-signed Docker cert
-    ports:
-      - "${PORT:-3000}:3000"
-    networks:
-      - agent_network
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: agent_app
+  #   restart: unless-stopped
+  #   depends_on:
+  #     sqlserver:
+  #       condition: service_healthy
+  #     sqlserver-init:
+  #       condition: service_completed_successfully
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     # Override SQL host to point to the container name (not localhost)
+  #     SQL_SERVER: "sqlserver"
+  #     SQL_PORT: "1433"
+  #     SQL_ENCRYPT: "false"                   # No SSL inside Docker network
+  #     SQL_TRUST_SERVER_CERTIFICATE: "true"   # Required for self-signed Docker cert
+  #   ports:
+  #     - "${PORT:-3000}:3000"
+  #   networks:
+  #     - agent_network
 
 # ── Named Volumes ─────────────────────────────────────────────────────────────
 volumes:
