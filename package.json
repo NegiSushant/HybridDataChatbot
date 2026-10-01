@@ -7,7 +7,12 @@
     "dev": "bun --watch src/index.ts",
     "start": "bun src/index.ts",
     "build": "tsc --noEmit",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f app",
+    "docker:reset": "docker compose down -v && docker compose up -d",
+    "docker:db": "docker compose up -d sqlserver sqlserver-init"
   },
   "devDependencies": {
     "@types/bun": "latest",
